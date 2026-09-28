@@ -1,0 +1,23 @@
+{
+  "name": "yua-mikami",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www.js",
+    "dev": "node --watch ./bin/www.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "axios": "^1.20.0",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^18.0.3",
+    "ejs": "^6.0.1",
+    "express": "~4.16.1",
+    "morgan": "~1.9.1",
+    "node-cache": "^5.1.2",
+    "winston": "^3.19.0",
+    "yt-search": "^2.13.1"
+  }
+}

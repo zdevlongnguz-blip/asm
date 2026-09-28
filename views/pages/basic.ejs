@@ -1,0 +1,38 @@
+<section class="basic-page" aria-labelledby="basic-title">
+  <div class="basic-header glass">
+    <div>
+      <p class="eyebrow"><i class="bi bi-cloud-sun" aria-hidden="true"></i> Tra cứu thời tiết</p>
+      <h1 id="basic-title">Tra cứu thời tiết</h1>
+      <p class="intro-lead">Thời tiết hiện tại và dự báo 7 ngày.</p>
+    </div>
+  </div>
+
+  <form class="basic-search glass" id="basic-form" autocomplete="off">
+    <label for="basic-address">Địa điểm</label>
+    <div class="basic-search-row">
+      <input class="form-control glass-input" id="basic-address" name="address" list="basic-suggestions" placeholder="Ví dụ: Thanh Hóa" maxlength="120" required />
+      <datalist id="basic-suggestions">
+        <% suggestions.forEach((city) => { %>
+          <option value="<%= city %>"></option>
+        <% }); %>
+      </datalist>
+      <button class="btn btn-primary basic-submit" type="submit"><i class="bi bi-search" aria-hidden="true"></i>Tra cứu</button>
+    </div>
+    <div class="basic-suggestions" aria-label="Gợi ý địa điểm nhanh">
+      <% suggestions.forEach((city) => { %>
+        <button class="basic-suggestion-btn" type="button" data-city="<%= city %>"><%= city %></button>
+      <% }); %>
+    </div>
+  </form>
+
+  <div class="basic-status" id="basic-status" role="status" aria-live="polite"></div>
+  <section class="basic-results" id="basic-results" aria-label="Kết quả thời tiết">
+    <div class="empty-state glass" id="basic-empty">
+      <i class="bi bi-thermometer-half" aria-hidden="true"></i>
+      <p>Chưa có dữ liệu</p>
+      <span>Nhập địa điểm để tra cứu.</span>
+    </div>
+  </section>
+</section>
+
+<script type="module" src="/js/basic.js"></script>

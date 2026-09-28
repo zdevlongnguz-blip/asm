@@ -1,0 +1,68 @@
+<div class="mobile-tabs glass d-md-none" role="tablist" aria-label="Khu vực ứng dụng">
+  <button class="tab-btn active" id="tab-chat" type="button" role="tab" aria-selected="true" aria-controls="panel-chat" data-target="panel-chat">Chat</button>
+  <button class="tab-btn" id="tab-results" type="button" role="tab" aria-selected="false" aria-controls="panel-results" data-target="panel-results">
+    Kết quả<span class="tab-dot" id="result-dot" hidden></span>
+  </button>
+</div>
+
+<div class="row g-3 app-grid">
+  <section class="col-md-5 panel active" id="panel-chat" role="tabpanel" aria-labelledby="tab-chat" aria-label="Chat với trợ lý AI">
+    <div class="glass panel-inner">
+      <div class="panel-head">
+        <div>
+          <h1 class="panel-title">Trợ lý AI</h1>
+          <p class="panel-subtitle"><span class="status-dot" aria-hidden="true"></span>Hỏi đáp và hỗ trợ tác vụ</p>
+        </div>
+        <button class="btn btn-ghost" id="clear-chat" type="button" aria-label="Xoá lịch sử chat" title="Xoá lịch sử chat">
+          <i class="bi bi-trash3" aria-hidden="true"></i><span>Xoá chat</span>
+        </button>
+      </div>
+      <div class="scroll-area" id="messages-area">
+        <div class="messages" id="messages" aria-live="polite" aria-relevant="additions text"></div>
+      </div>
+      <div class="panel-foot">
+        <label class="visually-hidden" for="prompt-select">Câu hỏi mẫu</label>
+        <select class="form-select glass-input prompt-select" id="prompt-select">
+          <option value="">Chọn câu hỏi để thử…</option>
+          <option value="Thời tiết Thanh Hóa hiện tại">Thời tiết Thanh Hóa hiện tại</option>
+          <option value="Thời tiết Bắc Cực hiện tại">Thời tiết Bắc Cực hiện tại</option>
+          <option value="Dự báo thời tiết Hà Nội">Dự báo thời tiết Hà Nội</option>
+          <option value="Phát bài hát Xương rồng - Dangrangto">Phát bài hát Xương rồng - Dangrangto</option>
+          <option value="Hà Nội mưa quá, tôi muốn nghe bài hát Cơn mưa ngang qua">Hà Nội mưa quá, nghe Cơn mưa ngang qua</option>
+          <option value="Bài nhạc &quot;Giờ thì&quot; - Buitruonglinh">Bài nhạc &quot;Giờ thì&quot; - Buitruonglinh</option>
+        </select>
+        <form id="chat-form" class="chat-form" autocomplete="off">
+          <label class="visually-hidden" for="chat-input">Câu hỏi hoặc yêu cầu</label>
+          <input id="chat-input" class="form-control glass-input" type="text" placeholder="Hỏi hoặc mô tả việc bạn cần hỗ trợ…" maxlength="1000" />
+          <button class="btn btn-send" id="send-button" type="submit" aria-label="Gửi câu hỏi" title="Gửi câu hỏi">
+            <i class="bi bi-send-fill" aria-hidden="true"></i>
+          </button>
+        </form>
+        <p class="input-note">Trợ lý sẽ chọn công cụ phù hợp với yêu cầu của bạn.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="col-md-7 panel" id="panel-results" role="tabpanel" aria-labelledby="tab-results" aria-label="Kết quả từ công cụ">
+    <div class="glass panel-inner">
+      <div class="panel-head">
+        <div>
+          <h2 class="panel-title">Kết quả từ công cụ</h2>
+          <p class="panel-subtitle">Dữ liệu chi tiết từ các dịch vụ được gọi</p>
+        </div>
+        <button class="btn btn-ghost" id="clear-results" type="button">
+          <i class="bi bi-trash3" aria-hidden="true"></i><span>Xoá</span>
+        </button>
+      </div>
+      <div class="scroll-area results" id="results" aria-live="polite" aria-relevant="additions">
+        <div class="empty-state" id="empty-state">
+          <i class="bi bi-grid-1x2" aria-hidden="true"></i>
+          <p>Chưa có dữ liệu trả về</p>
+          <span>Kết quả chi tiết từ các dịch vụ sẽ hiển thị ở đây.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script type="module" src="/js/weatherbot.js"></script>
