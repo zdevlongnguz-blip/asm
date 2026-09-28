@@ -130,7 +130,7 @@ Yêu cầu Node.js `20.18.1+`, npm và Ollama.
 ```powershell
 npm install
 winget install Ollama.Ollama
-ollama pull qwen2.5:1.5b
+ollama pull llama3.2:3b
 ```
 
 Nếu Ollama chưa tự chạy, mở terminal riêng:

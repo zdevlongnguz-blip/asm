@@ -86,7 +86,7 @@ Request, có thể chỉ định model nếu cần:
 ```json
 {
   "prompt": "Dự báo thời tiết Thanh Hóa hôm nay",
-  "model": "qwen2.5:1.5b"
+  "model": "llama3.2:3b"
 }
 ```
 
@@ -364,7 +364,7 @@ Bootstrap, Bootstrap Icons và Be Vietnam Pro hiện được nạp bằng CDN t
 
 - Windows PowerShell, macOS hoặc Linux.
 - Node.js `20.18.1+` và npm. Dùng bản Node.js LTS mới nhất là lựa chọn ưu tiên.
-- Ollama đã cài và có model `qwen2.5:1.5b`.
+- Ollama đã cài và có model `llama3.2:3b`.
 - Kết nối Internet để gọi OpenStreetMap, Open-Meteo và tìm video YouTube.
 - Không cần cài Bootstrap, Bootstrap Icons hoặc font bằng npm vì layout đang nạp chúng từ CDN.
 
@@ -402,7 +402,7 @@ ollama --version
 Tải model mặc định của project:
 
 ```powershell
-ollama pull qwen2.5:1.5b
+ollama pull llama3.2:3b
 ollama list
 ```
 
@@ -421,7 +421,7 @@ Invoke-RestMethod http://localhost:11434/api/tags
 Nếu dùng model khác, đặt tên model đó trong `.env`:
 
 ```env
-OLLAMA_MODEL=qwen2.5:1.5b
+OLLAMA_MODEL=llama3.2:3b
 OLLAMA_API_URL=http://localhost:11434
 ```
 
@@ -442,7 +442,7 @@ PORT=3000
 NODE_ENV=development
 API_BASE_URL=http://localhost:3000
 OLLAMA_API_URL=http://localhost:11434
-OLLAMA_MODEL=qwen2.5:1.5b
+OLLAMA_MODEL=llama3.2:3b
 OPEN_STREET_MAP_URL=https://nominatim.openstreetmap.org/search
 OPEN_METEO_URL=https://api.open-meteo.com/v1/forecast
 ```
