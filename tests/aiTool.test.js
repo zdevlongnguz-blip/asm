@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import axios from 'axios';
 import { env } from '../helpers/config/env.js';
-import { getAvailableModels, callOllama } from '../helpers/services/aiTool.js';
+import { getAvailableModels, callOllama, resolveToolCalls } from '../helpers/services/aiTool.js';
 
 const require = createRequire(import.meta.url);
 const weatherCodeMap = require('../helpers/data/weatherCodeMap.json');
@@ -231,6 +231,29 @@ test('xử lý cả tool thời tiết hiện tại và dự báo trong cùng c�
 	assert.equal(result.weatherCards[1].type, 'forecast');
 	assert.equal(getMock.mock.callCount(), 3);
 	assert.equal(postMock.mock.callCount(), 1);
+});
+
+test('thay tool call sai hoặc lặp của model bằng địa điểm và bài hát trong prompt mới', () => {
+	const prompt = 'cho tôi biết thời tiết hiện tại ở Bắc Cực, bật luôn cho tôi bài nhạc "Sao mình chưa nắm tay nhau remix"';
+	const modelToolCalls = [
+		{ function: { name: 'get_weather_by_address', arguments: { address: 'Hà Tĩnh' } } },
+		{ function: { name: 'play_youtube_music', arguments: { query: 'Lưu niên' } } },
+		{ function: { name: 'play_youtube_music', arguments: { query: 'Lưu niên' } } },
+	];
+
+	assert.deepEqual(resolveToolCalls(prompt, [], modelToolCalls), [
+		{ function: { name: 'get_weather_by_address', arguments: { address: 'Bắc Cực' } } },
+		{ function: { name: 'play_youtube_music', arguments: { query: 'Sao mình chưa nắm tay nhau remix' } } },
+	]);
+});
+
+test('fallback gọi cả thời tiết hiện tại và dự báo khi prompt yêu cầu cả hai', () => {
+	const toolCalls = resolveToolCalls('Thời tiết hiện tại và dự báo ở Bắc Cực', [], []);
+
+	assert.deepEqual(toolCalls, [
+		{ function: { name: 'get_weather_by_address', arguments: { address: 'Bắc Cực' } } },
+		{ function: { name: 'get_forecast_by_address', arguments: { address: 'Bắc Cực' } } },
+	]);
 });
 
 test('cho phép chọn model khác', async (context) => {

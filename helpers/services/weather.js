@@ -53,12 +53,16 @@ const findKnownLocationInText = (text) => {
 	// Hàm này nhận cả câu hỏi đầy đủ, khác với getVietnamProvinceByAddress chỉ nhận tên địa điểm riêng.
 	if (typeof text !== 'string' || text.trim() === '') return null;
 
-	// Chuẩn hóa câu hỏi để việc tìm tên không phụ thuộc dấu tiếng Việt, hoa thường hoặc dấu câu.
-	const normalizedText = normalizeAddress(text);
-	// Trả về địa điểm đầu tiên có tên hoặc alias xuất hiện trong câu hỏi; không tìm thấy thì trả null.
+	// So khớp theo token để tên ngắn như "Hà" không khớp nhầm bên trong "hát".
+	const textTokens = normalizeAddress(text).split(' ');
 	return vietnamProvinces.find((item) => {
 		const names = [item.name, ...item.aliases];
-		return names.some((name) => normalizedText.includes(normalizeAddress(name)));
+		return names.some((name) => {
+			const nameTokens = normalizeAddress(name).split(' ');
+			return textTokens.some((_, startIndex) => (
+				nameTokens.every((token, tokenIndex) => textTokens[startIndex + tokenIndex] === token)
+			));
+		});
 	}) || null;
 };
 
