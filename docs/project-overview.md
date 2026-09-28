@@ -49,7 +49,7 @@ Thông qua dự án, người phát triển có thể thực hành cách để A
 - HTML, CSS và JavaScript thuần.
 - Bootstrap và Bootstrap Icons qua CDN.
 - EJS master layout.
-- YouTube iframe với IFrame API để tạm dừng bài cũ khi phát bài mới.
+- Điều khiển YouTube iframe bằng `postMessage` để tạm dừng bài cũ khi phát bài mới.
 
 ### Ba trang chính
 
@@ -116,7 +116,7 @@ Dự án cũng giúp làm rõ các vấn đề thực tế khi tích hợp Agent
 - Thêm cơ chế chọn tool rõ ràng từ giao diện như `Tự động`, `Thời tiết` và `Âm nhạc`.
 - Hoàn thiện validation, retry, timeout và monitoring cho các API bên thứ ba.
 - Tách frontend thành hệ thống component chuyên nghiệp hơn bằng Angular hoặc React.
-- Refactor backend theo hướng module hóa sâu hơn, có registry, schema validation và test riêng cho từng tool.
+- Bổ sung kiểm tra runtime cho tham số tool và mở rộng test riêng cho từng service/tool.
 - Sử dụng database hoặc Redis để lưu conversation và cache khi triển khai nhiều instance.
 - Bổ sung xác thực người dùng, phân quyền và quản lý lịch sử cá nhân.
 - Đóng gói bằng Docker và triển khai lên cloud.

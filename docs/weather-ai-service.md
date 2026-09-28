@@ -61,7 +61,7 @@ Response thành công (`200`):
         "location": "Thanh Hóa",
         "icon": "bi bi-cloud-rain",
         "condition": "Mưa nhẹ",
-        "meme": "Mưa đêm trút nhẹ xuống hiên nhà\nGiọt nhỏ bay nghiêng phủ mái nhà\nMấy chiếc thuyền nan trôi cuối bến\nTrà thơm đợi nắng ghé hiên xa",
+        "meme": "Mưa đêm trút nhẹ xuống hiên nhà\nGiọt nhỏ bay nghiêng ướt cỏ hoa\nMấy chiếc thuyền nan trôi cuối bến\nTrà thơm đợi nắng ghé hiên xa",
         "current": {
           "temperature": { "value": 25, "unit": "°C" },
           "humidity": { "value": 70, "unit": "%" },
@@ -167,7 +167,7 @@ Response thành công có card dạng `youtube`:
 `callOllama()` gửi request đến Ollama tại `/api/chat`. Request gồm:
 
 - `model`: model được chọn hoặc model mặc định.
-- `messages`: hướng dẫn system về cách chọn tool, sử dụng số liệu chính xác, giải thích thuật ngữ và câu hỏi của người dùng.
+- `messages`: hướng dẫn system về cách chọn tool, không tự bịa dữ liệu thời tiết, và câu hỏi của người dùng.
 - `tools`: các hàm mà Ollama được phép yêu cầu ứng dụng chạy.
 - `stream: false`: chờ toàn bộ câu trả lời trong một response.
 
@@ -291,7 +291,7 @@ Luồng đầy đủ của yêu cầu `Phát bài hát Xương rồng - Dangrang
 5. `youtube.js` làm sạch query, gọi `yt-search`, lấy video đầu tiên, kiểm tra `videoId` đúng 11 ký tự và tạo `embedUrl` dạng `/embed/{videoId}`. Query rỗng, quá dài hoặc không tìm thấy video sẽ không tạo card.
 6. Backend trả `weatherCards` chứa card `type: "youtube"`; frontend không nhận HTML từ backend.
 7. `public/js/weatherbot.js` kiểm tra `videoId`, tự dựng iframe với `enablejsapi=1` và `origin` hiện tại, sau đó render card qua `cardRenderers.youtube`.
-8. Khi người dùng phát bài mới, frontend gửi `pauseVideo` qua `postMessage` đến các iframe YouTube cũ trước khi chèn card mới. Card cũ vẫn được giữ trong history và DOM; chỉ âm thanh cũ bị dừng.
+8. Khi người dùng phát bài mới, frontend gửi lệnh `pauseVideo` bằng giao thức `postMessage` của YouTube đến các iframe cũ trước khi chèn card mới. Card cũ vẫn được giữ trong history và DOM; chỉ âm thanh cũ bị dừng. Project không nạp thư viện YouTube IFrame Player API riêng.
 9. Khi người dùng hỏi weather, frontend chỉ prepend weather card và không gọi `pauseVideo`, nên bài nhạc hiện tại không bị ngắt.
 
 Trình duyệt vẫn có thể chặn autoplay theo chính sách của trình duyệt. Người dùng cần bấm nút play trong iframe nếu YouTube không tự phát.
@@ -352,8 +352,8 @@ Các dependency runtime trong `package.json`:
 | `node-cache` | Cache tọa độ, weather và forecast trong memory | Giảm request lặp và phù hợp app đơn tiến trình hiện tại. |
 | `winston` | Log JSON ra console/file | Log có cấu trúc, hỗ trợ theo dõi lỗi runtime. |
 | `morgan` | Log request HTTP | Theo dõi method, URL, status và thời gian response của Express. |
-| `cookie-parser` | Middleware đọc cookie | Giữ tương thích với cấu trúc Express hiện có và các route mở rộng sau này. |
-| `debug` | Namespace debug cho hệ sinh thái Express | Dependency tương thích với các package Express đang dùng. |
+| `cookie-parser` | Chưa được import trong mã nguồn hiện tại | Dependency còn trong `package.json`; có thể gỡ nếu ứng dụng không cần đọc cookie. |
+| `debug` | Chưa được import trực tiếp trong mã nguồn hiện tại | Dependency còn trong `package.json`; rà soát trước khi gỡ vì package khác có thể dùng gián tiếp. |
 | `yt-search` | Tìm video YouTube từ tên bài hát để lấy `videoId` | Không phải tự bịa ID hoặc nhúng search URL không phát được; backend có thể validate ID trước khi trả card. |
 
 Bootstrap, Bootstrap Icons và Be Vietnam Pro hiện được nạp bằng CDN trong layout, không phải dependency npm.
@@ -428,6 +428,14 @@ OLLAMA_API_URL=http://localhost:11434
 ### 15.4. Kiểm tra cấu hình `.env`
 
 File `.env` tối thiểu:
+
+Nếu chưa có file `.env`, sao chép mẫu bằng PowerShell:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+`API_BASE_URL` hiện được khai báo trong cấu hình nhưng chưa được sử dụng trong luồng ứng dụng.
 
 ```env
 PORT=3000
