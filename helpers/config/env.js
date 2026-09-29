@@ -7,7 +7,7 @@ const env = {
   // User-Agent giúp Nominatim nhận diện ứng dụng và hạn chế request bị từ chối hoặc reset kết nối.
   openStreetMapUserAgent: process.env.OPEN_STREET_MAP_USER_AGENT || 'WeatherBot/1.0 (local development)',
   ollamaApiUrl: process.env.OLLAMA_API_URL || 'http://localhost:11434',
-  ollamaModel: process.env.OLLAMA_MODEL || 'llama3.2:3b',
+  ollamaModel: process.env.OLLAMA_MODEL || 'qwen2.5:1.5b',
 };
 
 export { env };
